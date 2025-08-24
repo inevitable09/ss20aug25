@@ -15,16 +15,16 @@ const con = mysql.createConnection({
 });
 
 app.post("/save", (req, res) => {
-	let sql = "insert into student values(?, ?, ?)";
-	let data = [req.body.name, req.body.company, req.body.salary];
-	con.query(sql, data, (error, result) => {
-		if (error)
-			res.send(error);
-		else
-			res.send(result);
-	});
-});
+    let sql = "INSERT INTO student (name, company, salary) VALUES (?, ?, ?)";
+    let data = [req.body.name, req.body.company, req.body.salary];
 
-app.listen(process.env.PORT || 9000, () => {
-	console.log("ready to serve @ 9000");
-})
+    con.query(sql, data, (error, result) => {
+        if (error) {
+            console.error("DB Error:", error);  // log in Render logs
+            return res.status(500).send(error);
+        } else {
+            console.log("Insert OK:", result);
+            return res.send({ success: true, result });
+        }
+    });
+});
