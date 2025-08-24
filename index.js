@@ -24,4 +24,7 @@ app.post("/save", (req, res) => {
 			res.send(result);
 	});
 });
-app.listen(9000, () => {console.log("ready to serve @ 9000"); })
+
+app.listen(process.env.PORT || 9000, () => {
+	console.log("ready to serve @ 9000");
+})
